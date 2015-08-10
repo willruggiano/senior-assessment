@@ -2,11 +2,11 @@ Welcome to your final assessment at Fullstack Academy!
 
 You will have *2 hours* to complete this assessment.
 
-# Resources
+## Resources
 
 You are allowed to use *any* resources you'd like.
 
-# Getting started
+## Getting started
 
 ```bash
 npm install
