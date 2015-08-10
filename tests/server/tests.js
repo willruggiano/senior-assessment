@@ -19,18 +19,18 @@ describe('Server tests', function () {
 
     describe('User Model', function () {
 
-        xit('should exist', function () {
+        it('should exist', function () {
             expect(User.find).to.be.a('function');
         });
 
-        xit('should have the expected schema definition', function () {
+        it('should have the expected schema definition', function () {
             var schemaDefinition = User.schema.tree;
             expect(schemaDefinition.email.type).to.be.equal(String);
         });
 
         describe('validations', function () {
 
-            xit('should require email', function (done) {
+            it('should require email', function (done) {
                 var user = new User();
                 user.validate(function (err) {
                     expect(err).to.be.an('object');
@@ -46,7 +46,7 @@ describe('Server tests', function () {
 
     describe('Message Model', function () {
 
-        xit('should exist', function () {
+        it('should exist', function () {
             expect(Message.find).to.be.a('function');
         });
 
@@ -54,19 +54,19 @@ describe('Server tests', function () {
 
             var schemaDefinition = Message.schema.tree;
 
-            xit('should have expected subject definition', function () {
+            it('should have expected subject definition', function () {
                 expect(schemaDefinition.subject.type).to.be.equal(String);
             });
 
-            xit('should have expected body definition', function () {
+            it('should have expected body definition', function () {
                 expect(schemaDefinition.body.type).to.be.equal(String);
             });
 
-            xit('should have expected from definition', function () {
+            it('should have expected from definition', function () {
                 expect(schemaDefinition.from.ref).to.be.equal('User');
             });
 
-            xit('should have expected to definition', function () {
+            it('should have expected to definition', function () {
                 expect(schemaDefinition.to.ref).to.be.equal('User');
             });
 
@@ -74,12 +74,12 @@ describe('Server tests', function () {
 
         describe('validations', function () {
 
-            xit('should default subject to "No Subject"', function () {
+            it('should default subject to "No Subject"', function () {
                 var message = new Message();
                 expect(message.subject).to.be.equal('No Subject');
             });
 
-            xit('should require a body', function (done) {
+            it('should require a body', function (done) {
                 var message = new Message();
                 message.validate(function (err) {
                     expect(err).to.be.an('object');
@@ -89,7 +89,7 @@ describe('Server tests', function () {
                 });
             });
 
-            xit('should require a sender (from)', function (done) {
+            it('should require a sender (from)', function (done) {
                 var message = new Message();
                 message.validate(function (err) {
                     expect(err).to.be.an('object');
@@ -99,7 +99,7 @@ describe('Server tests', function () {
                 });
             });
 
-            xit('should require a recipient (to)', function (done) {
+            it('should require a recipient (to)', function (done) {
                 var message = new Message();
                 message.validate(function (err) {
                     expect(err).to.be.an('object');
@@ -173,15 +173,15 @@ describe('Server tests', function () {
 
                 describe('getAllWhereSender', function () {
 
-                    xit('should exist', function () {
+                    it('should exist', function () {
                         expect(Message.getAllWhereSender).to.be.a('function');
                     });
 
-                    xit('should return a promise', function () {
+                    it('should return a promise', function () {
                         expect(Message.getAllWhereSender(bobId).then).to.be.a('function');
                     });
 
-                    xit('should resolve to all the messages sent by Bob', function (done) {
+                    it('should resolve to all the messages sent by Bob', function (done) {
                         Message.getAllWhereSender(bobId).then(function (messages) {
                             expect(messages.length).to.be.equal(2);
                             expect(messages[0]._id.toString()).to.be.equal(bobFirstMessage.toString());
@@ -190,7 +190,7 @@ describe('Server tests', function () {
                         }, done);
                     });
 
-                    xit('should resolve to all the messages sent by Joan', function (done) {
+                    it('should resolve to all the messages sent by Joan', function (done) {
                         Message.getAllWhereSender(joanId).then(function (messages) {
                             expect(messages.length).to.be.equal(1);
                             expect(messages[0]._id.toString()).to.be.equal(joanFirstMessage.toString());
@@ -198,7 +198,7 @@ describe('Server tests', function () {
                         }, done);
                     });
 
-                    xit('should have the full information of both the sender and receiver', function (done) {
+                    it('should have the full information of both the sender and receiver', function (done) {
                         Message.getAllWhereSender(joanId).then(function (messages) {
 
                             var theMessage = messages[0];
@@ -232,11 +232,11 @@ describe('Server tests', function () {
                         });
                     });
 
-                    xit('should exist', function () {
+                    it('should exist', function () {
                         expect(testMessage.truncateSubject).to.be.a('function');
                     });
 
-                    xit('should return the message but with a limited subject\
+                    it('should return the message but with a limited subject\
                         text based on a passed in number to determine its length', function () {
 
                         var result = testMessage.truncateSubject(6);
@@ -246,7 +246,7 @@ describe('Server tests', function () {
 
                     });
 
-                    xit('should add an ellipses (...) after the truncated text if\
+                    it('should add an ellipses (...) after the truncated text if\
                         true is passed as the second argument', function () {
 
                         expect(testMessage.truncateSubject(12, true).subject).to.be.equal('Hey friendo!...');
@@ -272,7 +272,7 @@ describe('Server tests', function () {
 
             });
 
-            xit('should serve up index.html', function (done) {
+            it('should serve up index.html', function (done) {
                 agent
                     .get('/')
                     .expect(200)
@@ -286,7 +286,7 @@ describe('Server tests', function () {
                     });
             });
 
-            xit('should static serve the node_modules directory', function (done) {
+            it('should static serve the node_modules directory', function (done) {
                 agent
                     .get('/angular/angular.js')
                     .expect(200)
@@ -358,14 +358,14 @@ describe('Server tests', function () {
 
                 describe('users', function () {
 
-                    xit('should be implemented using a subrouter mounted on /users', function () {
+                    it('should be implemented using a subrouter mounted on /users', function () {
                         var usersRoute = app._router.stack.filter(function (entry) {
                             return entry.regexp.toString().search('users') !== -1;
                         })[0].handle;
                         expect(usersRoute.name).to.be.equal('router');
                     });
 
-                    xit('should serve up all users on request to GET /', function (done) {
+                    it('should serve up all users on request to GET /', function (done) {
                         agent
                             .get('/users')
                             .expect(200)
@@ -379,7 +379,7 @@ describe('Server tests', function () {
                             });
                     });
 
-                    xit('should update a user at PUT /{{usersId}}, send a 201 response', function (done) {
+                    it('should update a user at PUT /{{usersId}}, send a 201 response', function (done) {
                         agent
                             .put('/users/' + obama)
                             .send({
@@ -399,14 +399,14 @@ describe('Server tests', function () {
 
                 describe('messages', function () {
 
-                    xit('should be implemented using a subrouter mounted on /messages', function () {
+                    it('should be implemented using a subrouter mounted on /messages', function () {
                         var usersRoute = app._router.stack.filter(function (entry) {
                             return entry.regexp.toString().search('messages') !== -1;
                         })[0].handle;
                         expect(usersRoute.name).to.be.equal('router');
                     });
 
-                    xit('should serve up all messages (with filled in references) to a specific user on GET /to/{{recipientId}}', function (done) {
+                    it('should serve up all messages (with filled in references) to a specific user on GET /to/{{recipientId}}', function (done) {
                         agent
                             .get('/messages/to/' + obama)
                             .expect(200)
@@ -421,7 +421,7 @@ describe('Server tests', function () {
                             });
                     });
 
-                    xit('should serve up all messages from a specific sender on GET /from/{{senderId}}\
+                    it('should serve up all messages from a specific sender on GET /from/{{senderId}}\
                         and use the Message model static getAllWhereSender in the process', function (done) {
 
                         var sinon = require('sinon');
@@ -447,7 +447,7 @@ describe('Server tests', function () {
 
                     });
 
-                    xit('should add a new message on POST /, respond with 201 and created message', function (done) {
+                    it('should add a new message on POST /, respond with 201 and created message', function (done) {
 
                         agent
                             .post('/messages')
@@ -478,4 +478,3 @@ describe('Server tests', function () {
     });
 
 });
-
