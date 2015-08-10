@@ -1,4 +1,6 @@
-Welcome to your final assessment at Fullstack Academy! Good luck!
+Welcome to your final assessment at Fullstack Academy!
+
+You will have *2 hours* to complete this assessment.
 
 # Resources
 
